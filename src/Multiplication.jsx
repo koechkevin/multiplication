@@ -16,7 +16,7 @@ const RowHead = ({ start, length }) => {
   );
 };
 
-const Row = ({ start, length, row, state, onChange }) => {
+const Row = ({ start, length, row, state, onChange, handleKeyUp }) => {
   const columns = array(start, length);
   return (
     <div className="table">
@@ -26,6 +26,8 @@ const Row = ({ start, length, row, state, onChange }) => {
         return (
           <input
             onChange={onChange}
+            id={`${row}*${e}`}
+            onKeyUp={handleKeyUp}
             className={className}
             name={`${row}*${e}`}
             value={state[`${row}*${e}`] || ''}
@@ -48,6 +50,14 @@ const Multiplication = () => {
   const rows = array(startRow, rowLength);
   const onChange = (e) => setState({...state, [e.target.name]: e.target.value});
   const props = {start, length, state, onChange};
+  const handleKeyUp = (event) => {
+    if (event.keyCode === 13) {
+      const currentPosition = event.target.name.split('*');
+      const next = `${parseInt(currentPosition[1], 10) === rowLength?parseInt(currentPosition[0], 10)+1:currentPosition[0]}*${parseInt(currentPosition[1], 10) === rowLength?startRow:parseInt(currentPosition[1], 10)+1}`;
+      const nextInput = document.getElementById(next);
+      if(nextInput)nextInput.focus();
+    }
+  };
   return(
     <div className="multiplication">
       <div style={{ textAlign: 'left'}}>
@@ -61,7 +71,7 @@ const Multiplication = () => {
         <button onClick={() => setStart(start>1?start-1:1)} className="left" type="button">&lsaquo;</button>
         <div>
           <RowHead {...props} />
-          {rows.map((e, i) => <Row {...props} key={e*i} row={e} />)}
+          {rows.map((e, i) => <Row {...props} handleKeyUp={handleKeyUp} key={e*i} row={e} />)}
         </div>
         <button onClick={() => setStart(start+1)} className="right" type="button">&rsaquo;</button>
       </div>
