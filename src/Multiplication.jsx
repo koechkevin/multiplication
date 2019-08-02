@@ -6,7 +6,8 @@ const array = (start, length, status=false) => {
   for (let i = start; i<start+length; i++) output[output.length] = i;
   return output;
 };
-const ColumnHead = ({ start, length }) => {
+
+const RowHead = ({ start, length }) => {
   const heads = array(start, length, true);
   return (
     <div className="table">
@@ -15,7 +16,7 @@ const ColumnHead = ({ start, length }) => {
   );
 };
 
-const Column = ({ start, length, row, state, onChange }) => {
+const Row = ({ start, length, row, state, onChange }) => {
   const columns = array(start, length);
   return (
     <div className="table">
@@ -46,9 +47,7 @@ const Multiplication = () => {
   const [state, setState] = useState(initialState);
   const rows = array(startRow, startLength);
   const onChange = (e) => setState({...state, [e.target.name]: e.target.value});
-  const props = {
-    start, length, state, onChange
-  };
+  const props = {start, length, state, onChange};
   return(
     <div className="multiplication">
       <div style={{ textAlign: 'left'}}>
@@ -61,10 +60,8 @@ const Multiplication = () => {
       <div className="flexible">
         <button onClick={() => setStart(start>1?start-1:1)} className="left" type="button">&lsaquo;</button>
         <div>
-          <ColumnHead {...props} />
-          {
-            rows.map((e, i) => <Column {...props} key={e*i} row={e} />)
-          }
+          <RowHead {...props} />
+          {rows.map((e, i) => <Row {...props} key={e*i} row={e} />)}
         </div>
         <button onClick={() => setStart(start+1)} className="right" type="button">&rsaquo;</button>
       </div>
