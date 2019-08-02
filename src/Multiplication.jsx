@@ -20,7 +20,7 @@ const Row = ({ start, length, row, state, onChange }) => {
   const columns = array(start, length);
   return (
     <div className="table">
-      <div className="column">{row||''}</div>
+      <div className="column">{row}</div>
       {columns.map((e,i) => {
         const className = state[`${row}*${e}`] && state[`${row}*${e}`] !== (row * e).toString()?'red':!state[`${row}*${e}`]?'':'green';
         return (
@@ -30,7 +30,8 @@ const Row = ({ start, length, row, state, onChange }) => {
             name={`${row}*${e}`}
             value={state[`${row}*${e}`] || ''}
             key={i}
-            type="text" />
+            type="text"
+          />
         );
       })}
     </div>
@@ -38,8 +39,7 @@ const Row = ({ start, length, row, state, onChange }) => {
 };
 
 const Multiplication = () => {
-  const initialState = {
-  };
+  const initialState = {};
   const [start, setStart] = useState(1);
   const [length, setLength] = useState(5);
   const [startRow, setStartRow] = useState(1);
@@ -52,9 +52,9 @@ const Multiplication = () => {
     <div className="multiplication">
       <div style={{ textAlign: 'left'}}>
         <span>Rows </span>
-        <input min="4" max="20" onChange={(e)=>setRowLength(parseInt(e.target.value))} type="number" style={{ width: '40px'}} />
+        <input type="number" value={rowLength} min={4} max={20} onChange={(e)=>setRowLength(parseInt(e.target.value))} style={{ width: '40px'}} />
         <span>Columns </span>
-        <input min="4" max="20" type="number" onChange={(e)=>setLength(parseInt(e.target.value))} style={{ width: '40px'}} />
+        <input type="number" value={length} min={4} max={20} onChange={(e)=>setLength(parseInt(e.target.value))} style={{ width: '40px'}} />
       </div>
       <button onClick={() => setStartRow(startRow>1?startRow-1:1)} className="top" type="button">&#94;</button>
       <div className="flexible">
