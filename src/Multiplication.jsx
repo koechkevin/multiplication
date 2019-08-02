@@ -43,16 +43,16 @@ const Multiplication = () => {
   const [start, setStart] = useState(1);
   const [length, setLength] = useState(5);
   const [startRow, setStartRow] = useState(1);
-  const [startLength, setStartLength] = useState(5);
+  const [rowLength, setRowLength] = useState(5);
   const [state, setState] = useState(initialState);
-  const rows = array(startRow, startLength);
+  const rows = array(startRow, rowLength);
   const onChange = (e) => setState({...state, [e.target.name]: e.target.value});
   const props = {start, length, state, onChange};
   return(
     <div className="multiplication">
       <div style={{ textAlign: 'left'}}>
         <span>Rows </span>
-        <input min="4" max="20" onChange={(e)=>setStartLength(parseInt(e.target.value))} type="number" style={{ width: '40px'}} />
+        <input min="4" max="20" onChange={(e)=>setRowLength(parseInt(e.target.value))} type="number" style={{ width: '40px'}} />
         <span>Columns </span>
         <input min="4" max="20" type="number" onChange={(e)=>setLength(parseInt(e.target.value))} style={{ width: '40px'}} />
       </div>
