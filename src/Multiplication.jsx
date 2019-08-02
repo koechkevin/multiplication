@@ -1,30 +1,26 @@
 /* eslint-disable react/no-array-index-key */
 import React, { useState } from 'react';
 
-
+const array = (start, length, status=false) => {
+  let output = status?['']:[];
+  for (let i = start; i<start+length; i++) output[output.length] = i;
+  return output;
+};
 const ColumnHead = ({ start, length }) => {
-  const heads = () => {
-    let output = [''];
-    for (let i = start; i<start+length; i++) output[output.length] = i;
-    return output;
-  };
+  const heads = array(start, length, true);
   return (
     <div className="table">
-      {heads().map((e,i) => <div key={i} className="column">{e}</div>)}
+      {heads.map((e,i) => <div key={i} className="column">{e}</div>)}
     </div>
   );
 };
 
 const Column = ({ start, length, row, state, onChange }) => {
-  const columns = () => {
-    let output = [];
-    for (let i = start; i<start+length; i++) output[output.length] = i;
-    return output;
-  };
+  const columns = array(start, length);
   return (
     <div className="table">
       <div className="column">{row||''}</div>
-      {columns().map((e,i) => {
+      {columns.map((e,i) => {
         const className = state[`${row}*${e}`] && state[`${row}*${e}`] !== (row * e).toString()?'red':!state[`${row}*${e}`]?'':'green';
         return (
           <input
@@ -48,11 +44,7 @@ const Multiplication = () => {
   const [startRow, setStartRow] = useState(1);
   const [startLength, setStartLength] = useState(5);
   const [state, setState] = useState(initialState);
-  const rows = () => {
-    let output = [];
-    for (let i = startRow; i<startRow+startLength; i++) output[output.length] = i;
-    return output;
-  };
+  const rows = array(startRow, startLength);
   const onChange = (e) => setState({...state, [e.target.name]: e.target.value});
   const props = {
     start, length, state, onChange
@@ -71,7 +63,7 @@ const Multiplication = () => {
         <div>
           <ColumnHead {...props} />
           {
-            rows().map((e, i) => <Column {...props} key={e*i} row={e} />)
+            rows.map((e, i) => <Column {...props} key={e*i} row={e} />)
           }
         </div>
         <button onClick={() => setStart(start+1)} className="right" type="button">&rsaquo;</button>
