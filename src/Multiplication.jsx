@@ -53,7 +53,7 @@ const Multiplication = () => {
   const handleKeyUp = (event) => {
     if (event.keyCode === 13) {
       const currentPosition = event.target.name.split('*');
-      const next = `${parseInt(currentPosition[1], 10) === rowLength?parseInt(currentPosition[0], 10)+1:currentPosition[0]}*${parseInt(currentPosition[1], 10) === rowLength?startRow:parseInt(currentPosition[1], 10)+1}`;
+      const next = `${parseInt(currentPosition[1], 10) === length?parseInt(currentPosition[0], 10)+1:currentPosition[0]}*${parseInt(currentPosition[1], 10) === length?startRow:parseInt(currentPosition[1], 10)+1}`;
       const nextInput = document.getElementById(next);
       if(nextInput)nextInput.focus();
     }
